@@ -1,0 +1,57 @@
+<!-- todo:
+      cat pre filled vaules DONE!
+      action url DONE!
+      patch/post DONE!
+-->
+
+<% if action == :edit %>
+  <% action_url = cat_url(@cat) %>
+<% else %>
+  <% action_url = cats_url %>
+<% end %>
+
+<form action="<%=action_url%>" method="post">
+  <% if action == :edit %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+
+  <label for="cat_name">Name</label>
+  <input name="cat[name]" id="cat_name" type="text" value="<%=@cat.name%>">
+  <br>
+
+  <label>Sex</label>
+  <% if @cat.sex == 'M' %>
+    <input name="cat[sex]" id="cat_sex_m" type="radio" value="M" checked>
+    <label for="cat_sex_m">Male</label>
+    <input name="cat[sex]" id="cat_sex_f" type="radio" value="F">
+    <label for="cat_sex_f">Female</label>
+  <% else %>
+    <input name="cat[sex]" id="cat_sex_m" type="radio" value="M">
+    <label for="cat_sex_m">Male</label>
+    <input name="cat[sex]" id="cat_sex_f" type="radio" value="F" checked>
+    <label for="cat_sex_f">Female</label>
+  <% end %>
+  <br>
+
+  <label for="cat_color">Color</label>
+  <select name="cat[color]">
+    <option value="Select color" disabled="true" <%= @cat.color ? "" : "selected"%>>Select color</option>
+    <option value="black" <%= @cat.color == 'black' ? 'selected' : ""%>>Black</option>
+    <option value="white" <%= @cat.color == 'white' ? 'selected' : ""%>>White</option>
+    <option value="grey" <%= @cat.color == 'grey' ? 'selected' : ""%>>Grey</option>
+    <option value="orange" <%= @cat.color == 'orange' ? 'selected' : ""%>>Orange</option>
+    <option value="blue" <%= @cat.color == 'blue' ? 'selected' : ""%>>Blue</option>
+  </select>
+  <br>
+
+  <label for="cat_birth_date">Birth date</label>
+  <input type="date" name="cat[birth_date]" value="<%=@cat.birth_date%>">
+  <br>
+
+  <label for="cat_description">Description</label>
+  <br>
+  <textarea name="cat[description]" id="cat_description"><%=@cat.description%></textarea>
+  <br>
+
+  <input type="submit" value="Build my cat!">
+</form>
