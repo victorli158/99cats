@@ -10,6 +10,24 @@ class CatRentalRequest < ApplicationRecord
     class_name: 'Cat',
     dependent: :destroy
 
+  def approve!
+    raise "not currently pending" unless self.status == "PENDING"
+    transaction do
+      self.status = "APPROVED"
+      self.save!
+      overlapping_pending_requests.update_all(status: "DENIED")
+    end
+  end
+
+  def deny!
+    self.status = 'DENIED'
+    self.save!
+  end
+
+  def overlapping_pending_requests
+    overlapping_requests.where("status = 'PENDING'")
+  end
+
   # private
   def overlapping_requests
     CatRentalRequest
