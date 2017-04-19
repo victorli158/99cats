@@ -23,4 +23,15 @@
     <td>description</td>
     <td><%= @cat.description %></td>
   </tr>
+
+
 </table>
+
+
+<% @cat.cat_rental_requests.order("start_date").each do |rental_request| %>
+  <ul>
+    <li>RENTAL:</li>
+    <li>start date: <%= rental_request.start_date %></li>
+    <li>end date: <%= rental_request.end_date %></li>
+  </ul>
+<% end %>

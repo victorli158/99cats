@@ -6,7 +6,6 @@ class CatsController < ApplicationController
 
   def show
     @cat = Cat.find_by(id: params[:id])
-
     if @cat
       render :show
     else
